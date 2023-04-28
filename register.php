@@ -53,46 +53,46 @@
 					</div>
 					<div class="card shadow-lg">
 						<div class="card-body p-5">
-							<h1 class="fs-4 card-title fw-bold mb-4">Register</h1>
+							<h1 class="fs-4 card-title fw-bold mb-4">Kayıt Oluştur</h1>
 							<form method="POST" class="needs-validation" novalidate="" autocomplete="off">
 								<div class="mb-3">
-									<label class="mb-2 text-muted" for="name">Name</label>
+									<label class="mb-2 text-muted" for="name">İsim</label>
 									<input id="name" type="text" class="form-control" name="name" value="" required>
 									<div class="invalid-feedback">
-										Name is required	
+										İsim gerekli!
 									</div>
 								</div>
 
 								<div class="mb-3">
-									<label class="mb-2 text-muted" for="email">E-Mail Address</label>
+									<label class="mb-2 text-muted" for="email">E-Mail Adresi</label>
 									<input id="email" type="email" class="form-control" name="email" value="" required>
 									<div class="invalid-feedback">
-										Email is invalid
+										Email geçersiz!
 									</div>
 								</div>
 
 								<div class="mb-3">
-									<label class="mb-2 text-muted" for="password">Password</label>
+									<label class="mb-2 text-muted" for="password">Şifre</label>
 									<input id="password" type="password" class="form-control" name="password" required>
 								    <div class="invalid-feedback">
-								    	Password is required
+								    	Şifre gerekli!
 							    	</div>
 								</div>
 
 								<p class="form-text text-muted mb-3">
-									By registering you agree with our terms and condition.
+								Kaydolarak şartlarımızı ve koşullarımızı kabul etmiş olursunuz.
 								</p>
 
 								<div class="align-items-center d-flex">
 									<button type="submit" class="btn btn-primary ms-auto">
-										Register	
+										Oluştur	
 									</button>
 								</div>
 							</form>
 						</div>
 						<div class="card-footer py-3 border-0">
 							<div class="text-center">
-								Already have an account? <a href="index.html" class="text-dark">Login</a>
+								Zaten bir hesabın var mı? <a href="login.php" class="text-dark">Giriş yap!</a>
 							</div>
 						</div>
 					</div>

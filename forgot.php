@@ -1,3 +1,26 @@
+<?php
+	include_once('database.php');
+	
+	if($_SERVER['REQUEST_METHOD'] === 'POST'){
+		$email = $_POST['email'];
+		if($data = $conn -> prepare('SELECT id, name, password FROM users WHERE email = ?')){
+			$data -> bind_param('s', $email);
+			$data -> execute();
+			
+			$result = $data->get_result();
+			if ($result->num_rows > 0) {
+				echo 'E-mail adresi bulundu!'; // E-posta adresi mevcut
+
+			} else {
+				echo 'E-mail adresi bulunamadı!'; // E-posta adresi mevcut değil
+				
+			}
+			// mysqli_result nesnesini serbest bırak
+			$result->free();
+		}
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +28,7 @@
 	<meta name="author" content="Muhamad Nauval Azhar">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta name="description" content="This is a login page template based on Bootstrap 5">
-	<title>Bootstrap 5 Login Page</title>
+	<title>Bootstrap 5 Forgot Page</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
 
@@ -19,26 +42,27 @@
 					</div>
 					<div class="card shadow-lg">
 						<div class="card-body p-5">
-							<h1 class="fs-4 card-title fw-bold mb-4">Forgot Password</h1>
+							<h1 class="fs-4 card-title fw-bold mb-4">Parola Sıfırla</h1>
 							<form method="POST" class="needs-validation" novalidate="" autocomplete="off">
 								<div class="mb-3">
-									<label class="mb-2 text-muted" for="email">E-Mail Address</label>
+									<label class="mb-2 text-muted" for="email">E-Mail Adresi</label>
 									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>
 									<div class="invalid-feedback">
-										Email is invalid
+										Geçersiz E-mail!
 									</div>
+
 								</div>
 
 								<div class="d-flex align-items-center">
 									<button type="submit" class="btn btn-primary ms-auto">
-										Send Link	
+										Gönder
 									</button>
 								</div>
 							</form>
 						</div>
 						<div class="card-footer py-3 border-0">
 							<div class="text-center">
-								Remember your password? <a href="index.html" class="text-dark">Login</a>
+								Şifreni mi hatırladın? <a href="login.php" class="text-dark">Giriş yap!</a>
 							</div>
 						</div>
 					</div>

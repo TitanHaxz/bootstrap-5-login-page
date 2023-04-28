@@ -1,8 +1,3 @@
-<?php 
-    require_once('database.php');
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +5,7 @@
 	<meta name="author" content="Muhamad Nauval Azhar">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta name="description" content="This is a login page template based on Bootstrap 5">
-	<title>Bootstrap 5 Login Page</title>
+	<title>Bootstrap 5 İndex Page</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
 
@@ -24,13 +19,38 @@
 					</div>
 					<div class="card shadow-lg">
 						<div class="card-body p-5">
-							<h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
-							
-						<div class="card-footer py-3 border-0">
-							<div class="text-center">
-								Don't have an account? <a href="register.html" class="text-dark">Create One</a>
-							</div>
-						</div>
+							<?php 
+								require_once('database.php');
+								session_start();
+								// Eğer kullanıcı giriş yaptıysa 
+								if (isset($_SESSION['loggedin'])) {
+									echo '
+										<h1 class="fs-4 card-title fw-bold mb-4">Giriş yapılmış!</h1>
+										<div class="card-footer py-3 border-0">
+											<div class="text-center">
+												ID: ' . $_SESSION['id'] . '<br>
+												Kullanıcı adı: ' . $_SESSION['name'] . '<br>
+												E-mail: ' . $_SESSION['email'] . '<br>
+												Şifreni, <a href="logout.php" class="text-dark">güncelle!</a><br>
+												Hesaptan, <a href="logout.php" class="text-dark">Çıkış yap!</a>
+											</div>
+										</div>
+								
+									';
+								}else{
+									// Eğer kullanıcı giriş yapmadıysa;
+									echo '
+										<h1 class="fs-4 card-title fw-bold mb-4">Giriş Yapılmamış!</h1>
+										<div class="card-footer py-3 border-0">
+											<div class="text-center">
+												Hesabın yok mu? <a href="register.php" class="text-dark">Kayıt ol!</a> <br>
+												Hesabın var ise, <a href="login.php" class="text-dark">Giriş Yap!</a>
+											</div>
+										</div>
+									';
+								}
+							?>
+	
 					</div>
 					<div class="text-center mt-5 text-muted">
 						Copyright &copy; 2017-2021 &mdash; Your Company 

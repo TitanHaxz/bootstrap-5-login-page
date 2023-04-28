@@ -1,5 +1,12 @@
 <?php
+	session_start();
 	require_once('database.php');
+
+	// Eğer kullanıcı giriş yaptıysa, index.php sayfasına yönlendirilir.
+	if (isset($_SESSION['loggedin'])) {
+		header('Location: index.php');
+		exit();
+	}
 
 	if($_SERVER['REQUEST_METHOD'] === 'POST'){
 		if($data = $conn -> prepare('SELECT id, name, password FROM users WHERE email = ?')){
@@ -13,7 +20,7 @@
 			
 				if(password_verify($_POST['password'], $password)){
 					session_regenerate_id();
-					$_SESSION['login'] = TRUE;
+					$_SESSION['loggedin'] = TRUE;
 					$_SESSION['name'] = $name;
 					$_SESSION['email'] = $_POST['email'];
 					$_SESSION['id'] = $id;
@@ -48,43 +55,43 @@
 					</div>
 					<div class="card shadow-lg">
 						<div class="card-body p-5">
-							<h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
+							<h1 class="fs-4 card-title fw-bold mb-4">Giriş Yap</h1>
 							<form method="POST" class="needs-validation" novalidate="" autocomplete="off">
 								<div class="mb-3">
-									<label class="mb-2 text-muted" for="email">E-Mail Address</label>
+									<label class="mb-2 text-muted" for="email">E-Mail Adresi</label>
 									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>
 									<div class="invalid-feedback">
-										Email is invalid
+										Email geçersiz!
 									</div>
 								</div>
 
 								<div class="mb-3">
 									<div class="mb-2 w-100">
-										<label class="text-muted" for="password">Password</label>
-										<a href="forgot.html" class="float-end">
-											Forgot Password?
+										<label class="text-muted" for="password">Şifre</label>
+										<a href="forgot.php" class="float-end">
+											Şifreni mi unuttun?
 										</a>
 									</div>
 									<input id="password" type="password" class="form-control" name="password" required>
 								    <div class="invalid-feedback">
-								    	Password is required
+								    	Password gerekli!
 							    	</div>
 								</div>
 
 								<div class="d-flex align-items-center">
 									<div class="form-check">
 										<input type="checkbox" name="remember" id="remember" class="form-check-input">
-										<label for="remember" class="form-check-label">Remember Me</label>
+										<label for="remember" class="form-check-label">Beni hatırla!</label>
 									</div>
 									<button type="submit" class="btn btn-primary ms-auto">
-										Login
+										Giriş yap
 									</button>
 								</div>
 							</form>
 						</div>
 						<div class="card-footer py-3 border-0">
 							<div class="text-center">
-								Don't have an account? <a href="register.html" class="text-dark">Create One</a>
+								Hesabın yok mu? <a href="register.php" class="text-dark">Kayıt ol!</a>
 							</div>
 						</div>
 					</div>
