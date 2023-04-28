@@ -1,3 +1,37 @@
+<?php 
+	require_once('database.php');
+
+	if($_SERVER['REQUEST_METHOD'] == 'POST'){
+		if ($data = $conn -> prepare('SELECT id, name, email, password FROM users WHERE id = ?')) {
+			$data -> bind_param('s', $_POST['name']);
+			$data -> execute();
+			$data -> store_result();
+
+			// Kayıt formunda istenilenler eksiksiz ve doğruysa database ile bağlantı kurulur
+			// Kullanıcının doldurduğu form bilgileri database işlenir
+
+			if($data = $conn -> prepare('INSERT INTO users (name, email, password) VALUES (?,?,?)')){
+				// ⁡⁢⁣⁣Kullanıcının şifresini güvenli bir şekilde saklamak için hash fonksiyonu kullanıyoruz⁡
+				$pass = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+				$data -> bind_param('sss', $_POST['name'], $_POST['email'], $pass);
+				$data -> execute();
+
+				// Kayıt işlemi başarıyla sonuçlaırsa kullanıcıyı `index.php` sayfasına aktarır.
+				header('Location: index.php');
+				exit();
+			// Sorgu sırasında herhagi bir hata ile karşılaşılırsa
+			}else {
+				echo "Veritabanı sorgusu hazırlanırken bir hata oluştu: ";
+			}
+		
+		}
+		// conn işlemi sonlandırılır.
+		$conn -> close();
+	}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +39,7 @@
 	<meta name="author" content="Muhamad Nauval Azhar">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta name="description" content="This is a login page template based on Bootstrap 5">
-	<title>Bootstrap 5 Login Page</title>
+	<title>Bootstrap 5 Register Page</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
 
@@ -23,7 +57,7 @@
 							<form method="POST" class="needs-validation" novalidate="" autocomplete="off">
 								<div class="mb-3">
 									<label class="mb-2 text-muted" for="name">Name</label>
-									<input id="name" type="text" class="form-control" name="name" value="" required autofocus>
+									<input id="name" type="text" class="form-control" name="name" value="" required>
 									<div class="invalid-feedback">
 										Name is required	
 									</div>
